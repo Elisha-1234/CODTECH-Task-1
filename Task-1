@@ -1,0 +1,45 @@
+TASK ONE: PASSWORD STRENGTH CHECKER
+
+Develop a tool to assess the strength of passwords entered by users. Implement
+algorithms to analyze factors such as length, complexity, and uniqueness to provide
+feedback on password strength.
+
+
+import re
+
+def password_strength_checker(password):
+    errors = []
+
+    if len(password) < 8:
+        errors.append("Password is too short")
+
+    if not re.search(r"[A-Z]", password):
+        errors.append("Password should have at least one uppercase letter")
+
+    if not re.search(r"[a-z]", password):
+        errors.append("Password should have at least one lowercase letter")
+
+    if not re.search(r"\d", password):
+        errors.append("Password should have at least one number")
+
+    if not re.search(r"\W", password):
+        errors.append("Password should have at least one special character")
+
+    if len(errors) == 0:
+        return "Strong"
+    elif len(errors) < 3:
+        return "Medium", errors
+    else:
+        return "Weak", errors
+
+password = input("Enter a password: ")
+result = password_strength_checker(password)
+
+if isinstance(result, tuple):
+    strength, errors = result
+    print(f"Password strength: {strength}")
+    print("Errors:")
+    for error in errors:
+        print(error)
+else:
+    print(f"Password strength: {result}")
